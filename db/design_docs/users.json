@@ -1,0 +1,15 @@
+{
+  "_id": "_design/users",
+  "language": "javascript",
+  "views": {
+    "byEmail": {
+      "map": "function(doc) {\n  if (doc.type === 'User') {\n    emit([doc.type, doc.contact.email], null)\n  }\n}"
+    },
+    "byUsername": {
+      "map": "function(doc) {\n  if (doc.type === 'User') {\n    emit(doc.contact.name, null)\n  }\n}"
+    },
+    "byId": {
+      "map": "function(doc) {\n  if (doc.type === 'User') {\n    emit([doc.type, doc._id], null)\n  }\n}"
+    }
+  }
+}
