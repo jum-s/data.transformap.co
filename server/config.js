@@ -1,4 +1,6 @@
+const CONFIG = require('config')
 const americano = require('americano')
+const passport = require('./middlewares/passport')
 
 const cors = function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -15,7 +17,14 @@ module.exports = {
       dumpExceptions: true,
       showStack: true
     }),
-    cors
+    cors,
+    passport.initialize,
+    passport.session({
+      secret: CONFIG.get('auth.passportSessionSecret'),
+      resave: true,
+      saveUninitialized: true, pauseStrea
+      : true
+    }),
   ],
   development: [
     americano.logger('dev')
