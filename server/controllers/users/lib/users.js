@@ -49,7 +49,7 @@ module.exports = {
   create: create,
   byUsername: byUsername,
   byId: byId,
-  findOrCreateUser: function(userInfo, done){
+  findOrCreateUser: function(userInfo){
     return byUsername(userInfo.contact.name)
     .then(function (foundUser) {
       if(foundUser){
