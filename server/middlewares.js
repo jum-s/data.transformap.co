@@ -1,5 +1,5 @@
+const logger = require('morgan')
 const CONFIG = require('config')
-const americano = require('americano')
 const passport = require('./middlewares/passport')
 
 const cors = function (req, res, next) {
@@ -11,25 +11,22 @@ const cors = function (req, res, next) {
 
 module.exports = {
   common: [
-    americano.bodyParser({limit: '50mb'}),
-    americano.methodOverride(),
-    americano.errorHandler({
-      dumpExceptions: true,
-      showStack: true
-    }),
-    cors,
     passport.initialize,
     passport.session({
       secret: CONFIG.get('auth.passportSessionSecret'),
       resave: true,
-      saveUninitialized: true, pauseStrea
-      : true
+      saveUninitialized: true,
+      pauseStream: true
     }),
+    require('body-parser').json(),
+    require('method-override')(),
+    require('errorhandler')({ dumpExceptions: true, showStack: true }),
+    cors
   ],
   development: [
-    americano.logger('dev')
+    logger('dev')
   ],
   production: [
-    americano.logger('short')
+    logger('short')
   ]
 }
